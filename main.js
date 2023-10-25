@@ -7,6 +7,7 @@ class Item {
     this.existencias = existencias;
   }
 }
+
 const item = [
   new Item(1000, "monitor", "periferico", 1000, 20),
   new Item(1001, "teclado", "periferico", 150, 15),
@@ -17,6 +18,7 @@ const item = [
   new Item(1006, "notebook", "hardware", 1300, 5),
   new Item(1007, "netbook", "hardware", 700, 7),
 ];
+
 function buscarId() {
   let itemId = Number(prompt("Ingrese un ID entre 1000 y 1007"));
   while (itemId < 1000 || itemId > 1007 || isNaN(itemId)) {
@@ -29,6 +31,7 @@ function buscarId() {
   }
   return itemFiltrado;
 }
+
 function buscarNombre() {
   let itemName = prompt("Ingrese el nombre de un producto: \n- Monitor \n- Teclado \n- Mouse \n- Windows11 \n- Excel \n- Paquete de Adobe \n- Notebook \n- Netbook").toLowerCase();
   while (!["monitor", "teclado", "mouse", "windows11", "excel", "paquete de adobe", "notebook", "netbook"].includes(itemName)) {
@@ -41,6 +44,7 @@ function buscarNombre() {
   }
   return itemFiltrado;
 }
+
 function buscarCategoria() {
   let itemCat = prompt("Ingrese una de las siguientes categorías: \n- Periferico \n- Software \n- Hardware").toLowerCase();
   while (!["periferico", "software", "hardware"].includes(itemCat)) {
@@ -53,6 +57,7 @@ function buscarCategoria() {
   }
   return itemsFiltrados;
 }
+
 function buscarPrecio() {
   let itemPrice = Number(prompt("Ingrese su presupuesto"));
   while (isNaN(itemPrice) || itemPrice < 0) {
@@ -65,6 +70,7 @@ function buscarPrecio() {
   }
   return itemsFiltrados;
 }
+
 function accesoAdmin() {
   let accionAdm = prompt("Indique su necesidad: Stock / Repo").toLowerCase();
   while (accionAdm !== "salir") {
@@ -72,7 +78,7 @@ function accesoAdmin() {
       const stockOrdenado = item.sort((a, b) => a.existencias - b.existencias);
       stockOrdenado.forEach(item => {
         const listaItem = document.createElement("p");
-        listaItem.textContent =  `
+        listaItem.textContent = `
           id: ${item.id}
           nombre: ${item.nombre}
           categoría: ${item.categoria}
@@ -85,7 +91,7 @@ function accesoAdmin() {
       const repOrdenado = item.sort((a, b) => b.existencias - a.existencias);
       repOrdenado.forEach(item => {
         const listaItem = document.createElement("p");
-        listaItem.textContent =  `
+        listaItem.textContent = `
           id: ${item.id}
           nombre: ${item.nombre}
           categoría: ${item.categoria}
@@ -100,40 +106,51 @@ function accesoAdmin() {
     accionAdm = prompt("Indique su necesidad: Stock / Reposicion o Salir para finalizar").toLowerCase();
   }
 }
+
 const inventoryElement = document.getElementById("inventory");
 alert("PreEntrega2 Naranjo Federico: Control de Stock de Inventario");
+
 let opcionBusqueda;
 let itemsFiltrados = [];
+
 do {
   opcionBusqueda = prompt("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
 } while (opcionBusqueda !== "id" && opcionBusqueda !== "nombre" && opcionBusqueda !== "categoria" && opcionBusqueda !== "precio" && opcionBusqueda !== "admin");
+
 switch (opcionBusqueda) {
+  
   case "id":
     itemsFiltrados = buscarId();
     break;
-  case "nombre":
+  
+    case "nombre":
     itemsFiltrados = buscarNombre();
     break;
-  case "categoria":
+  
+    case "categoria":
     itemsFiltrados = buscarCategoria();
     break;
-  case "precio":
+  
+    case "precio":
     itemsFiltrados = buscarPrecio();
     break;
-  case "admin":
+  
+    case "admin":
     accesoAdmin();
     break;
-  default:
+  
+    default:
     alert("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
     while (opcionBusqueda !== "id" && opcionBusqueda !== "nombre" && opcionBusqueda !== "categoría" && opcionBusqueda !== "precio" && opcionBusqueda !== "admin") {
       opcionBusqueda = prompt("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
     }
     break;
 }
+
 if (itemsFiltrados.length > 0) {
   itemsFiltrados.forEach(item => {
     const detallesItem = document.createElement("p");
-    detallesItem.textContent =  `
+    detallesItem.textContent = `
       id: ${item.id}
       nombre: ${item.nombre}
       categoría: ${item.categoria}
