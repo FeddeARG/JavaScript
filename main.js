@@ -19,6 +19,10 @@ const item = [
   new Item(1007, "netbook", "hardware", 700, 7),
 ];
 
+const inventoryElement = document.getElementById("inventory");
+let opcionBusqueda;
+let itemFiltrado = [];
+
 function buscarId() {
   let itemId = Number(prompt("Ingrese un ID entre 1000 y 1007"));
   while (itemId < 1000 || itemId > 1007 || isNaN(itemId)) {
@@ -50,12 +54,12 @@ function buscarCategoria() {
   while (!["periferico", "software", "hardware"].includes(itemCat)) {
     itemCat = prompt("Ingrese una categoría válida de las siguientes: \n- Periferico \n- Software \n- Hardware").toLowerCase();
   }
-  let itemsFiltrados = item.filter(item => item.categoria === itemCat);
-  while (itemsFiltrados.length === 0) {
+  let itemFiltrado = item.filter(item => item.categoria === itemCat);
+  while (itemFiltrado.length === 0) {
     itemCat = prompt("No hay categorías que coincidan con el valor ingresado. Ingrese una categoría válida de las siguientes: \n- Periferico \n- Software \n- Hardware").toLowerCase();
-    itemsFiltrados = item.filter(item => item.categoria === itemCat);
+    itemFiltrado = item.filter(item => item.categoria === itemCat);
   }
-  return itemsFiltrados;
+  return itemFiltrado;
 }
 
 function buscarPrecio() {
@@ -63,19 +67,22 @@ function buscarPrecio() {
   while (isNaN(itemPrice) || itemPrice < 0) {
     itemPrice = Number(prompt("Ingrese un presupuesto mayor a 0"));
   }
-  let itemsFiltrados = item.filter(item => item.precio <= itemPrice);
-  while (itemsFiltrados.length === 0) {
+  let itemFiltrado = item.filter(item => item.precio <= itemPrice);
+  while (itemFiltrado.length === 0) {
     itemPrice = Number(prompt("No hay productos que se ajusten a su presupuesto. Por favor, ingrese un presupuesto mayor a $50"));
-    itemsFiltrados = item.filter(item => item.precio <= itemPrice);
+    itemFiltrado = item.filter(item => item.precio <= itemPrice);
   }
-  return itemsFiltrados;
+  return itemFiltrado;
 }
 
 function accesoAdmin() {
-  let accionAdm = prompt("Indique su necesidad: Stock / Repo").toLowerCase();
+  let accionAdm = prompt("Indique su necesidad: Stock / Reposicion").toLowerCase();
+  let itemsToShow = [];
+
   while (accionAdm !== "salir") {
     if (accionAdm === "stock") {
       const stockOrdenado = item.sort((a, b) => a.existencias - b.existencias);
+      itemsToShow = stockOrdenado;
       stockOrdenado.forEach(item => {
         const listaItem = document.createElement("p");
         listaItem.textContent = `
@@ -85,9 +92,9 @@ function accesoAdmin() {
           precio: $${item.precio}
           stock: ${item.existencias}
         ` ;
-        inventoryElement.appendChild(listaItem);
+        inventoryElement.append(listaItem);
       });
-    } else if (accionAdm === "repo") {
+    } else if (accionAdm === "reposicion") {
       const repOrdenado = item.sort((a, b) => b.existencias - a.existencias);
       repOrdenado.forEach(item => {
         const listaItem = document.createElement("p");
@@ -98,20 +105,17 @@ function accesoAdmin() {
           precio: $${item.precio}
           stock: ${item.existencias}
         ` ;
-        inventoryElement.appendChild(listaItems);
+        inventoryElement.append(listaItem);
       });
     } else {
-      alert("Indique su necesidad: Stock / Reposicion o Salir para finalizar");
+      alert("Indique su necesidad: Stock / Reposicion o Salir para visualizar");
     }
-    accionAdm = prompt("Indique su necesidad: Stock / Reposicion o Salir para finalizar").toLowerCase();
+    accionAdm = prompt("Indique su necesidad: Stock / Reposicion o Salir para visualizar").toLowerCase();
   }
 }
 
-const inventoryElement = document.getElementById("inventory");
-alert("PreEntrega2 Naranjo Federico: Control de Stock de Inventario");
 
-let opcionBusqueda;
-let itemsFiltrados = [];
+alert("PreEntrega2 Naranjo Federico: Control de Stock de Inventario");
 
 do {
   opcionBusqueda = prompt("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
@@ -120,19 +124,19 @@ do {
 switch (opcionBusqueda) {
   
   case "id":
-    itemsFiltrados = buscarId();
+    itemsFiltrado = buscarId();
     break;
   
     case "nombre":
-    itemsFiltrados = buscarNombre();
+    itemsFiltrado = buscarNombre();
     break;
   
     case "categoria":
-    itemsFiltrados = buscarCategoria();
+    itemsFiltrado = buscarCategoria();
     break;
   
     case "precio":
-    itemsFiltrados = buscarPrecio();
+    itemsFiltrado = buscarPrecio();
     break;
   
     case "admin":
@@ -147,8 +151,8 @@ switch (opcionBusqueda) {
     break;
 }
 
-if (itemsFiltrados.length > 0) {
-  itemsFiltrados.forEach(item => {
+if (itemsFiltrado.length > 0) {
+  itemsFiltrado.forEach(item => {
     const detallesItem = document.createElement("p");
     detallesItem.textContent = `
       id: ${item.id}
@@ -157,6 +161,6 @@ if (itemsFiltrados.length > 0) {
       precio: $${item.precio}
       stock: ${item.existencias}
     ` ;
-    inventoryElement.appendChild(detallesItem);
+    inventoryElement.append(detallesItem);
   });
 }
