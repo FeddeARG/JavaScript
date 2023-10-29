@@ -8,151 +8,149 @@ class Item {
   }
 }
 
-const item = [
-  new Item(1000, "monitor", "periferico", 1000, 20),
-  new Item(1001, "teclado", "periferico", 150, 15),
-  new Item(1002, "ratón", "periferico", 200, 10),
-  new Item(1003, "windows11", "software", 150, 200),
-  new Item(1004, "excel", "software", 50, 300),
-  new Item(1005, "paquete de adobe", "software", 100, 70),
-  new Item(1006, "notebook", "hardware", 1300, 5),
-  new Item(1007, "netbook", "hardware", 700, 7),
-];
+const separador = " / ";
+let item = [];
+
+// Recupero el array del localStorage
+const storedItemArray = localStorage.getItem("itemArray");
+
+// Verificacion del array en el localStorage
+if (storedItemArray) {
+  item = JSON.parse(storedItemArray);
+} else {
+  // Si no se encuentra se crea
+  item = [
+    new Item(1000, "monitor", "periferico", 1000, 20),
+    new Item(1001, "teclado", "periferico", 150, 15),
+    new Item(1002, "ratón", "periferico", 200, 10),
+    new Item(1003, "windows11", "software", 150, 200),
+    new Item(1004, "excel", "software", 50, 300),
+    new Item(1005, "paquete de adobe", "software", 100, 70),
+    new Item(1006, "notebook", "hardware", 1300, 5),
+    new Item(1007, "netbook", "hardware", 700, 7),
+  ];
+
+  // Guardamos en el localStorage
+  localStorage.setItem("itemArray", JSON.stringify(item));
+}
 
 const inventoryElement = document.getElementById("inventory");
-let opcionBusqueda;
-let itemFiltrado = [];
+const busquedaOpcElement = document.getElementById("busquedaOpc");
+const inputContainerElement = document.getElementById("inputContainer");
+const busquedaButton = document.getElementById("busquedaButton");
 
-function buscarId() {
-  let itemId = Number(prompt("Ingrese un ID entre 1000 y 1007"));
-  while (itemId < 1000 || itemId > 1007 || isNaN(itemId)) {
-    itemId = Number(prompt("Ingrese un ID entre 1000 y 1007"));
-  }
-  let itemFiltrado = item.filter(item => item.id === itemId);
-  while (itemFiltrado.length === 0) {
-    itemId = Number(prompt("ID no encontrado. Ingrese un ID entre 1000 y 1007"));
-    itemFiltrado = item.filter(item => item.id === itemId);
-  }
-  return itemFiltrado;
-}
+busquedaOpcElement.addEventListener("change", handlebusquedaOpcChange);
+busquedaButton.addEventListener("click", handlebusquedaButtonClick);
 
-function buscarNombre() {
-  let itemName = prompt("Ingrese el nombre de un producto: \n- Monitor \n- Teclado \n- Mouse \n- Windows11 \n- Excel \n- Paquete de Adobe \n- Notebook \n- Netbook").toLowerCase();
-  while (!["monitor", "teclado", "mouse", "windows11", "excel", "paquete de adobe", "notebook", "netbook"].includes(itemName)) {
-    itemName = prompt("Ingrese un nombre de producto válido: \n- Monitor \n- Teclado \n- Mouse \n- Windows11 \n- Excel \n- Paquete de Adobe \n- Notebook \n- Netbook").toLowerCase();
-  }
-  let itemFiltrado = item.filter(item => item.nombre === itemName);
-  while (itemFiltrado.length === 0) {
-    itemName = prompt("Nombre no encontrado. Ingrese el nombre de un producto: \n- Monitor \n- Teclado \n- Mouse \n- Windows11 \n- Excel \n- Paquete de Adobe \n- Notebook \n- Netbook").toLowerCase();
-    itemFiltrado = item.filter(item => item.nombre === itemName);
-  }
-  return itemFiltrado;
-}
+function handlebusquedaOpcChange() {
+  const busquedaOpc = busquedaOpcElement.value;
+  inputContainerElement.innerHTML = "";
 
-function buscarCategoria() {
-  let itemCat = prompt("Ingrese una de las siguientes categorías: \n- Periferico \n- Software \n- Hardware").toLowerCase();
-  while (!["periferico", "software", "hardware"].includes(itemCat)) {
-    itemCat = prompt("Ingrese una categoría válida de las siguientes: \n- Periferico \n- Software \n- Hardware").toLowerCase();
-  }
-  let itemFiltrado = item.filter(item => item.categoria === itemCat);
-  while (itemFiltrado.length === 0) {
-    itemCat = prompt("No hay categorías que coincidan con el valor ingresado. Ingrese una categoría válida de las siguientes: \n- Periferico \n- Software \n- Hardware").toLowerCase();
-    itemFiltrado = item.filter(item => item.categoria === itemCat);
-  }
-  return itemFiltrado;
-}
-
-function buscarPrecio() {
-  let itemPrice = Number(prompt("Ingrese su presupuesto"));
-  while (isNaN(itemPrice) || itemPrice < 0) {
-    itemPrice = Number(prompt("Ingrese un presupuesto mayor a 0"));
-  }
-  let itemFiltrado = item.filter(item => item.precio <= itemPrice);
-  while (itemFiltrado.length === 0) {
-    itemPrice = Number(prompt("No hay productos que se ajusten a su presupuesto. Por favor, ingrese un presupuesto mayor a $50"));
-    itemFiltrado = item.filter(item => item.precio <= itemPrice);
-  }
-  return itemFiltrado;
-}
-
-function accesoAdmin() {
-  let accionAdm = prompt("Indique su necesidad: Stock / Reposicion").toLowerCase();
-  let itemsToShow = [];
-
-  while (accionAdm !== "salir") {
-    if (accionAdm === "stock") {
-      const stockOrdenado = item.sort((a, b) => a.existencias - b.existencias);
-      itemsToShow = stockOrdenado;
-      stockOrdenado.forEach(item => {
-        const listaItem = document.createElement("p");
-        listaItem.textContent = `
-          id: ${item.id}
-          nombre: ${item.nombre}
-          categoría: ${item.categoria}
-          precio: $${item.precio}
-          stock: ${item.existencias}
-        ` ;
-        inventoryElement.append(listaItem);
-      });
-    } else if (accionAdm === "reposicion") {
-      const repOrdenado = item.sort((a, b) => b.existencias - a.existencias);
-      repOrdenado.forEach(item => {
-        const listaItem = document.createElement("p");
-        listaItem.textContent = `
-          id: ${item.id}
-          nombre: ${item.nombre}
-          categoría: ${item.categoria}
-          precio: $${item.precio}
-          stock: ${item.existencias}
-        ` ;
-        inventoryElement.append(listaItem);
-      });
-    } else {
-      alert("Indique su necesidad: Stock / Reposicion o Salir para visualizar");
-    }
-    accionAdm = prompt("Indique su necesidad: Stock / Reposicion o Salir para visualizar").toLowerCase();
-  }
-}
-
-
-alert("PreEntrega2 Naranjo Federico: Control de Stock de Inventario");
-
-do {
-  opcionBusqueda = prompt("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
-} while (opcionBusqueda !== "id" && opcionBusqueda !== "nombre" && opcionBusqueda !== "categoria" && opcionBusqueda !== "precio" && opcionBusqueda !== "admin");
-
-switch (opcionBusqueda) {
-  
-  case "id":
-    itemFiltrado = buscarId();
-    break;
-  
+  switch (busquedaOpc) {
+    
+    case "id":
+      inputContainerElement.innerHTML = `
+        <label for="itemId">Ingrese ID (1000-1007):</label>
+        <input type="number" id="itemId" min="1000" max="1007">
+      `;
+      break;
+    
     case "nombre":
-    itemFiltrado = buscarNombre();
-    break;
-  
+      inputContainerElement.innerHTML = `
+        <label for="itemName">Ingrese nombre de producto:</label>
+        <input type="text" id="itemName">
+      `;
+      break;
+    
     case "categoria":
-    itemFiltrado = buscarCategoria();
-    break;
-  
+      inputContainerElement.innerHTML = `
+        <label for="itemCategory">Ingrese categoría:</label>
+        <input type="text" id="itemCategory">
+      `;
+      break;
+    
     case "precio":
-    itemFiltrado = buscarPrecio();
-    break;
-  
+      inputContainerElement.innerHTML = `
+        <label for="itemPrice">Ingrese presupuesto:</label>
+        <input type="number" id="itemPrice" min="0">
+      `;
+      break;
+    
     case "admin":
-    accesoAdmin();
-    break;
-  
+      inputContainerElement.innerHTML = `
+        <label for="adminAction">Selección de Administrador:</label>
+        <select id="adminAction">
+          <option value="stock">Stock</option>
+          <option value="reposicion">Reposicion</option>
+        </select>
+      `;
+      break;
+    
     default:
-    alert("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
-    while (opcionBusqueda !== "id" && opcionBusqueda !== "nombre" && opcionBusqueda !== "categoría" && opcionBusqueda !== "precio" && opcionBusqueda !== "admin") {
-      opcionBusqueda = prompt("Ingrese una de las siguientes opciones: \n- ID \n- Nombre \n- Categoría \n- Precio \n- Admin (acceso de empleado)").toLowerCase();
-    }
-    break;
+      break;
+  }
 }
 
-if (itemFiltrado.length > 0) {
-  itemFiltrado.forEach(item => {
+function handlebusquedaButtonClick() {
+  const busquedaOpc = busquedaOpcElement.value;
+  let itemFiltrado = [];
+
+  switch (busquedaOpc) {
+    
+    case "id":
+      const itemId = Number(document.getElementById("itemId").value);
+      itemFiltrado = item.filter((item) => item.id === itemId);
+      break;
+    
+    case "nombre":
+      const itemName = document.getElementById("itemName").value.toLowerCase();
+      itemFiltrado = item.filter((item) => item.nombre === itemName);
+      break;
+    
+    case "categoria":
+      const itemCategory = document.getElementById("itemCategory").value.toLowerCase();
+      itemFiltrado = item.filter((item) => item.categoria === itemCategory);
+      break;
+    
+    case "precio":
+      const itemPrice = Number(document.getElementById("itemPrice").value);
+      itemFiltrado = item.filter((item) => item.precio <= itemPrice);
+      break;
+    
+    case "admin":
+      handleAdminAction();
+      return;
+    
+    default:
+      break;
+  }
+
+  displayItems(itemFiltrado);
+}
+
+function handleAdminAction() {
+  const adminAction = document.getElementById("adminAction").value;
+
+  switch (adminAction) {
+    
+    case "stock":
+      const stockOrdenado = item.sort((a, b) => a.existencias - b.existencias);
+      displayItems(stockOrdenado);
+      break;
+  
+    case "reposicion":
+      const repOrdenado = item.sort((a, b) => b.existencias - a.existencias);
+      displayItems(repOrdenado);
+      break;
+    
+    default:
+      break;
+  }
+}
+
+function displayItems(items) {
+  inventoryElement.innerHTML = "";
+  items.forEach((item) => {
     const detallesItem = document.createElement("p");
     detallesItem.textContent = `
       id: ${item.id}
@@ -160,7 +158,7 @@ if (itemFiltrado.length > 0) {
       categoría: ${item.categoria}
       precio: $${item.precio}
       stock: ${item.existencias}
-    ` ;
+    `;
     inventoryElement.append(detallesItem);
   });
 }

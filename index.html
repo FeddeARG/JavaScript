@@ -7,13 +7,19 @@
     <title>Proyecto Naranjo</title>
 </head>
 <body>
-    <div id="inventory">
-    <button> Buscar por Id</button>
-    <button> Buscar por nombre</button>
-    <button> Buscar por categoria</button>
-    <button> Buscar por precio</button>
-    <button> Acceso Admin</button>
-    </div>
+    <div>
+        <label for="busquedaOpc">Buscar por:</label>
+        <select id="busquedaOpc">
+          <option value="id">ID</option>
+          <option value="nombre">Nombre</option>
+          <option value="categoria">Categoría</option>
+          <option value="precio">Precio</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div id="inputContainer"></div>
+      <button id="busquedaButton">Buscar</button>
+      <div id="inventory"></div>
     <script src="./main.js"></script>
 </body>
 </html>
