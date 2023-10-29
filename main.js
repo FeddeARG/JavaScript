@@ -124,19 +124,19 @@ do {
 switch (opcionBusqueda) {
   
   case "id":
-    itemsFiltrado = buscarId();
+    itemFiltrado = buscarId();
     break;
   
     case "nombre":
-    itemsFiltrado = buscarNombre();
+    itemFiltrado = buscarNombre();
     break;
   
     case "categoria":
-    itemsFiltrado = buscarCategoria();
+    itemFiltrado = buscarCategoria();
     break;
   
     case "precio":
-    itemsFiltrado = buscarPrecio();
+    itemFiltrado = buscarPrecio();
     break;
   
     case "admin":
@@ -151,8 +151,8 @@ switch (opcionBusqueda) {
     break;
 }
 
-if (itemsFiltrado.length > 0) {
-  itemsFiltrado.forEach(item => {
+if (itemFiltrado.length > 0) {
+  itemFiltrado.forEach(item => {
     const detallesItem = document.createElement("p");
     detallesItem.textContent = `
       id: ${item.id}
