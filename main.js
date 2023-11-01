@@ -54,7 +54,7 @@ function handlesearchOptChange() {
 
     case "id":
       inputContainerElement.innerHTML = `
-        <label for="itemId">Ingrese un ID entre (1000-${item[item.length -1].id}):</label>
+        <label for="itemId">Ingrese un ID entre (1000-${item[item.length - 1].id}):</label>
         <input type="number" id="itemId" min="1000" max="1007">
       `;
       break;
@@ -100,10 +100,10 @@ function handlebusquedaButtonClick() {
   const menorPrecio = item.reduce((min, currentItem) => {
     return currentItem.precio < min ? currentItem.precio : min;
   }, item[0].precio);
-  let ultimoID = item[item.length-1].id;
+  let ultimoID = item[item.length - 1].id;
   let itemFiltrado = [];
   let error = "";
-  
+
   switch (searchOpt) {
 
     case "id":
@@ -154,7 +154,7 @@ function handlebusquedaButtonClick() {
           error = "No hay coincidencias dentro del rango establecido.";
         }
       } else {
-        error = "Por favor, ingrese un presupuesto mayor a " + menorPrecio ;
+        error = "Por favor, ingrese un presupuesto mayor a " + menorPrecio;
       }
       break;
 
@@ -200,7 +200,7 @@ function handleAdminAction() {
 function displayArrayInfo() {
   const arrayContainer = document.getElementById("arrayContainer");
   let formattedArrayInfo = "";
-  item.forEach(function(item) {
+  item.forEach(function (item) {
     formattedArrayInfo += "ID: " + item.id + "<br>";
     formattedArrayInfo += "Nombre: " + item.nombre + "<br>";
     formattedArrayInfo += "Categoría: " + item.categoria + "<br>";
@@ -211,6 +211,10 @@ function displayArrayInfo() {
 }
 
 displayArrayInfo();
+
+function updateLocalStorage(items) {
+  localStorage.setItem("item", JSON.stringify(items));
+}
 
 function displayItems(items) {
   inventoryElement.innerHTML = "";
@@ -233,11 +237,35 @@ function displayItems(items) {
     const precioElement = document.createElement("p");
     precioElement.textContent = `Precio: $${item.precio}`;
     card.append(precioElement);
-
+    
     const existenciasElement = document.createElement("p");
     existenciasElement.textContent = `Existencias: ${item.existencias}`;
     card.append(existenciasElement);
-
     inventoryElement.append(card);
+
+    const addButton = document.createElement("button");
+    addButton.classList.add("card-btn");
+    addButton.textContent = "Agregar";
+    addButton.addEventListener("click", () => {
+      item.existencias++;
+      updateLocalStorage(items);
+      displayItems(items);
+    });
+    card.append(addButton);
+
+    const remButton = document.createElement("button");
+    remButton.classList.add("card-btn");
+    remButton.textContent = "Quitar";
+    remButton.addEventListener("click", () => {
+      if (item.existencias > 0) {
+        item.existencias--;
+        updateLocalStorage(items);
+        displayItems(items);
+      }
+    });
+    card.append(remButton);
   });
 }
+
+displayItems();
+
