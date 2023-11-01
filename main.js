@@ -269,3 +269,4 @@ function displayItems(items) {
 
 displayItems();
 
+// que ? 
