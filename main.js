@@ -1,5 +1,7 @@
 localStorage.clear();
 
+let item = [];
+
 class Item {
   constructor(id, nombre, categoria, precio, existencias) {
     this.id = id;
@@ -11,7 +13,6 @@ class Item {
 }
 
 const separador = " / ";
-let item = [];
 
 // Recupero el array del localStorage
 const storedItemArray = localStorage.getItem("itemArray");
@@ -199,16 +200,14 @@ function handleAdminAction() {
 function displayArrayInfo() {
   const arrayContainer = document.getElementById("arrayContainer");
   let formattedArrayInfo = "";
-
   item.forEach(function(item) {
-    formattedArrayInfo += "ID: " + item.id + "\n";
-    formattedArrayInfo += "Nombre: " + item.nombre + "\n";
-    formattedArrayInfo += "Categoría: " + item.categoria + "\n";
-    formattedArrayInfo += "Precio: $" + item.precio + "\n";
-    formattedArrayInfo += "Existencias: " + item.existencias + "\n\n";
+    formattedArrayInfo += "ID: " + item.id + "<br>";
+    formattedArrayInfo += "Nombre: " + item.nombre + "<br>";
+    formattedArrayInfo += "Categoría: " + item.categoria + "<br>";
+    formattedArrayInfo += "Precio: $" + item.precio + "<br>";
+    formattedArrayInfo += "Existencias: " + item.existencias + "<br><br>";
   });
-
-  arrayContainer.textContent = formattedArrayInfo;
+  arrayContainer.innerHTML = formattedArrayInfo;
 }
 
 displayArrayInfo();

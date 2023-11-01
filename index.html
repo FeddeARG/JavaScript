@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="section1">
+      <div>
         <label for="searchOpt">Buscar por:</label>
         <select id="searchOpt">
           <option value="id">ID</option>
@@ -16,13 +17,17 @@
           <option value="precio">Precio</option>
           <option value="admin">Admin</option>
         </select>
-    </div>
-    <div class="section2">
+      </div>
       <div id="inputContainer"></div>
       <button id="busquedaButton">Buscar</button>
       <div id="inventory"></div>
-      <div id="arrayContainer"></div>
+    </div>
+    <div class="section2">  
+        <div id="arrayContainer">
+          <h1>Nuestros productos: </h1>
+        </div>
     </div>
     <script src="./main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
