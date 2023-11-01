@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/main.css">
     <title>Proyecto Naranjo</title>
 </head>
 <body>
-    <div>
-        <label for="busquedaOpc">Buscar por:</label>
-        <select id="busquedaOpc">
+    <div class="section1">
+        <label for="searchOpt">Buscar por:</label>
+        <select id="searchOpt">
           <option value="id">ID</option>
           <option value="nombre">Nombre</option>
           <option value="categoria">Categoría</option>
           <option value="precio">Precio</option>
           <option value="admin">Admin</option>
         </select>
-      </div>
+    </div>
+    <div class="section2">
       <div id="inputContainer"></div>
       <button id="busquedaButton">Buscar</button>
       <div id="inventory"></div>
+      <div id="arrayContainer"></div>
+    </div>
     <script src="./main.js"></script>
 </body>
 </html>

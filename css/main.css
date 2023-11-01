@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/back.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+body .card {
+  background-color: #d81313;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+body .card .card p {
+  margin: 5px 0;
+}
+
+/*# sourceMappingURL=main.css.map */
