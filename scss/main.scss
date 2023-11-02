@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani&family=Roboto:ital,wght@1,300&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +10,8 @@
 }
 
 body {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: bolder;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -39,7 +44,7 @@ body {
             width: 100%;
 
             .card p {
-                font-family: 'Roboto', sans-serif;
+                font-family: 'Rajdhani', sans-serif;
                 margin: 5px 0;
             }
         }
@@ -56,7 +61,7 @@ body {
         height: fit-content;
         margin-right: auto;
         padding-left: 10px;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Rajdhani', sans-serif;
         align-items: center;
         justify-content: center;
         #arrayContainer{
@@ -71,4 +76,108 @@ body {
         h1 {
             font-weight: bolder;
         }
+    }
+
+
+    #busquedaButton, .card-btn {
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: bolder;
+        font-size: 13px;
+        text-transform: uppercase !important;
+        letter-spacing: 2px;
+        color: rgb(179, 98, 66);
+        cursor: hand;
+        text-align: center;
+        text-transform: capitalize;
+        border: 1px solid #fff;
+        border-radius: 50px;
+        position: relative;
+        overflow: hidden !important;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+        background: transparent !important;
+        width: 80px;
+        height: 2%;
+        z-index: 10;
+        
+        &:hover {
+          border: 1px solid #cab4c5;
+          color: #84ff80 !important;
+        }
+        
+        &::before {
+          content: '';
+          width: 0%;
+          height: 100%;
+          display: block;
+          background: rgb(58, 47, 61);
+          position: absolute;
+          -ms-transform: skewX(-20deg);
+          -webkit-transform: skewX(-20deg);
+          transform: skewX(-20deg);
+          left: -10%;
+          opacity: 1;
+          top: 0;
+          z-index: -12;
+          -moz-transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+          -o-transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+          -webkit-transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+          transition: all .7s cubic-bezier(0.77, 0, 0.175, 1);
+          box-shadow: 2px 0px 14px rgba(0, 0, 0, .6);
+        }
+        
+        &::after {
+          content: '';
+          width: 0%;
+          height: 100%;
+          display: block;
+          background: #80ffd3;
+          position: absolute;
+          -ms-transform: skewX(-20deg);
+          -webkit-transform: skewX(-20deg);
+          transform: skewX(-20deg);
+          left: -10%;
+          opacity: 0;
+          top: 0;
+          z-index: -15;
+          -webkit-transition: all .94s cubic-bezier(.2, .95, .57, .99);
+          -moz-transition: all .4s cubic-bezier(.2, .95, .57, .99);
+          -o-transition: all .4s cubic-bezier(.2, .95, .57, .99);
+          transition: all .4s cubic-bezier(.2, .95, .57, .99);
+          box-shadow: 2px 0px 14px rgba(0, 0, 0, .6);
+        }
+        
+        &:hover::before {
+          opacity: 1;
+          width: 116%;
+        }
+        
+        &:hover::after {
+          opacity: 1;
+          width: 120%;
+        }
+      }
+
+    #searchOpt, #inputContainer input {
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: bolder;
+        font-size: 1em;
+        text-transform: uppercase !important;
+        letter-spacing: 2px;
+        color: rgb(213, 238, 69);
+        cursor: hand;
+        text-align: center;
+        text-transform: capitalize;
+        border: 1px solid #fff;
+        border-radius: 50px;
+        position: relative;
+        overflow: hidden !important;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+        background: rgb(32, 32, 32);
+        z-index: 10;
     }
