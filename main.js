@@ -38,10 +38,10 @@ if (storedItemArray) {
   localStorage.setItem("itemArray", JSON.stringify(item));
 }
 
-const inventoryElement = document.getElementById("inventory");
-const searchOptElement = document.getElementById("searchOpt");
-const inputContainerElement = document.getElementById("inputContainer");
-const busquedaButton = document.getElementById("busquedaButton");
+const inventoryElement = document.querySelector("#inventory");
+const searchOptElement = document.querySelector("#searchOpt");
+const inputContainerElement = document.querySelector("#inputContainer");
+const busquedaButton = document.querySelector("#busquedaButton");
 
 searchOptElement.addEventListener("change", handlesearchOptChange);
 busquedaButton.addEventListener("click", handlebusquedaButtonClick);
@@ -108,7 +108,7 @@ function handlebusquedaButtonClick() {
 
     case "id":
 
-      const itemId = Number(document.getElementById("itemId").value);
+      const itemId = Number(document.querySelector("#itemId").value);
       if (itemId >= 1000 && itemId <= ultimoID) {
         itemFiltrado = item.filter((item) => item.id === itemId);
         if (!itemFiltrado.length) {
@@ -121,7 +121,7 @@ function handlebusquedaButtonClick() {
 
     case "nombre":
 
-      const itemName = document.getElementById("itemName").value.toLowerCase();
+      const itemName = document.querySelector("#itemName").value.toLowerCase();
       if (itemName.trim() !== "") {
         itemFiltrado = item.filter((item) => item.nombre === itemName);
         if (!itemFiltrado.length) {
@@ -134,7 +134,7 @@ function handlebusquedaButtonClick() {
 
     case "categoria":
 
-      const itemCategory = document.getElementById("itemCategory").value.toLowerCase();
+      const itemCategory = document.querySelector("#itemCategory").value.toLowerCase();
       if (itemCategory.trim() !== "") {
         itemFiltrado = item.filter((item) => item.categoria === itemCategory);
         if (!itemFiltrado.length) {
@@ -147,7 +147,7 @@ function handlebusquedaButtonClick() {
 
     case "precio":
 
-      const itemPrice = Number(document.getElementById("itemPrice").value);
+      const itemPrice = Number(document.querySelector("#itemPrice").value);
       if (!isNaN(itemPrice) && itemPrice >= 0) {
         itemFiltrado = item.filter((item) => item.precio <= itemPrice);
         if (!itemFiltrado.length) {
@@ -178,7 +178,7 @@ function handlebusquedaButtonClick() {
 }
 
 function handleAdminAction() {
-  const adminAction = document.getElementById("adminAction").value;
+  const adminAction = document.querySelector("#adminAction").value;
 
   switch (adminAction) {
 
@@ -198,7 +198,7 @@ function handleAdminAction() {
 }
 
 function displayArrayInfo() {
-  const arrayContainer = document.getElementById("arrayContainer");
+  const arrayContainer = document.querySelector("#arrayContainer");
   let formattedArrayInfo = "";
   item.forEach(function (item) {
     formattedArrayInfo += "ID: " + item.id + "<br>";
@@ -249,6 +249,7 @@ function displayItems(items) {
     addButton.addEventListener("click", () => {
       item.existencias++;
       updateLocalStorage(items);
+      displayArrayInfo();
       displayItems(items);
     });
     card.append(addButton);
@@ -260,6 +261,7 @@ function displayItems(items) {
       if (item.existencias > 0) {
         item.existencias--;
         updateLocalStorage(items);
+        displayArrayInfo();
         displayItems(items);
       }
     });

@@ -27,7 +27,7 @@ body .section1 {
 }
 body .card {
   row-gap: 10px;
-  background-color: #d81313;
+  background-color: #742222;
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -53,8 +53,13 @@ body .card .card p {
   margin-right: auto;
   padding-left: 10px;
   font-family: "Roboto", sans-serif;
+  align-items: center;
+  justify-content: center;
 }
 .section2 #arrayContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 50%;
   border: 2px solid rgb(179, 98, 66);
   box-shadow: 0 0 10px rgba(179, 98, 66, 0.5);
