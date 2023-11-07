@@ -19,6 +19,11 @@ PF-Func100V1.2 :
 - Se agrega validación en ciclo for para verificar si hay un array definido o no y cómo proceder en cada caso. 
 
 
+PF-Func100V1.3 :
+
+- Se agrega "versionado" para bitácora de modificaciones y acceso a posibles backups.
+
+
 
 Próxima versión:
 

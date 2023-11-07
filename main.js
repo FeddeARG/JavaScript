@@ -6,32 +6,32 @@ class Item {
   constructor(id, nombre, categoria, precio, existencias) {
     this.id = id;
     this.nombre = nombre;
-    this.categoria = categoria;
-    this.precio = precio;
-    this.existencias = existencias;
+      this.categoria = categoria;
+      this.precio = precio;
+      this.existencias = existencias;
+    }
   }
-}
 
-const separador = " / ";
+  const separador = " / ";
 
 // Recupero el array del localStorage
 const storedItemArray = localStorage.getItem("itemArray");
 
-// Verificacion del array en el localStorage
+// Verificación del array en el localStorage
 if (storedItemArray) {
   item = JSON.parse(storedItemArray);
 } else {
   // Si no se encuentra se crea
   item = [
-    new Item(1000, "monitor", "periferico", 1000, 20),
-    new Item(1001, "teclado", "periferico", 150, 15),
-    new Item(1002, "ratón", "periferico", 200, 10),
+    new Item(1000, "monitor", "periférico", 1000, 20),
+    new Item(1001, "teclado", "periférico", 150, 15),
+    new Item(1002, "ratón", "periférico", 200, 10),
     new Item(1003, "windows11", "software", 150, 200),
     new Item(1004, "excel", "software", 50, 300),
-    new Item(1005, "paquete de adobe", "software", 100, 70),
+    new Item(1005, "paquete de Adobe", "software", 100, 70),
     new Item(1006, "notebook", "hardware", 1300, 5),
     new Item(1007, "netbook", "hardware", 700, 7),
-    new Item(1008, "Allin1", "hardware", 500, 4),
+    new Item(1008, "All-in-One", "hardware", 500, 4),
   ];
 
   // Guardamos en el localStorage
@@ -48,38 +48,33 @@ busquedaButton.addEventListener("click", handlebusquedaButtonClick);
 
 function handlesearchOptChange() {
   const searchOpt = searchOptElement.value;
-  inputContainerElement.innerHTML = "";
+  inputContainerElement.innerHTML = ""; 
 
   switch (searchOpt) {
-
     case "id":
       inputContainerElement.innerHTML = `
-        <label for="itemId">Ingrese un ID entre (1000-${item[item.length - 1].id}):</label>
-        <input type="number" id="itemId" min="1000" max="1007">
+        <label for="itemId">Ingrese un ID entre (1000-${item[item.length - 1].id} o agregar):</label>
+        <input type="text" id="itemId" min="1000" max="1007">
       `;
       break;
-
     case "nombre":
       inputContainerElement.innerHTML = `
         <label for="itemName">Ingrese el nombre de un producto:</label>
         <input type="text" id="itemName">
       `;
       break;
-
     case "categoria":
       inputContainerElement.innerHTML = `
         <label for="itemCategory">Ingrese una categoría:</label>
         <input type="text" id="itemCategory">
       `;
       break;
-
     case "precio":
       inputContainerElement.innerHTML = `
         <label for="itemPrice">Ingrese un presupuesto:</label>
         <input type="number" id="itemPrice" min="0">
       `;
       break;
-
     case "admin":
       inputContainerElement.innerHTML = `
         <label for="adminAction">Selección de Administrador:</label>
@@ -89,7 +84,6 @@ function handlesearchOptChange() {
         </select>
       `;
       break;
-
     default:
       break;
   }
@@ -105,25 +99,25 @@ function handlebusquedaButtonClick() {
   let error = "";
 
   switch (searchOpt) {
-
     case "id":
-
-      const itemId = Number(document.querySelector("#itemId").value);
-      if (itemId >= 1000 && itemId <= ultimoID) {
-        itemFiltrado = item.filter((item) => item.id === itemId);
+      const itemId = document.querySelector("#itemId").value;
+      if (itemId === "agregar") {
+        createNewItemForm();
+        return;
+      } else if (itemId >= 1000 && itemId <= ultimoID) {
+        itemFiltrado = item.filter((item) => item.id == itemId);
         if (!itemFiltrado.length) {
           error = "No hay coincidencias con el ID ingresado.";
         }
       } else {
-        error = "Por favor, ingrese un ID de producto.";
+        error = "Por favor, ingrese un ID de producto válido.";
       }
       break;
 
     case "nombre":
-
       const itemName = document.querySelector("#itemName").value.toLowerCase();
       if (itemName.trim() !== "") {
-        itemFiltrado = item.filter((item) => item.nombre === itemName);
+        itemFiltrado = item.filter((item) => item.nombre.toLowerCase() === itemName);
         if (!itemFiltrado.length) {
           error = "No hay coincidencias con el nombre ingresado.";
         }
@@ -133,10 +127,9 @@ function handlebusquedaButtonClick() {
       break;
 
     case "categoria":
-
       const itemCategory = document.querySelector("#itemCategory").value.toLowerCase();
       if (itemCategory.trim() !== "") {
-        itemFiltrado = item.filter((item) => item.categoria === itemCategory);
+        itemFiltrado = item.filter((item) => item.categoria.toLowerCase() === itemCategory);
         if (!itemFiltrado.length) {
           error = "No hay coincidencias con la categoría ingresada.";
         }
@@ -146,7 +139,6 @@ function handlebusquedaButtonClick() {
       break;
 
     case "precio":
-
       const itemPrice = Number(document.querySelector("#itemPrice").value);
       if (!isNaN(itemPrice) && itemPrice >= 0) {
         itemFiltrado = item.filter((item) => item.precio <= itemPrice);
@@ -159,7 +151,6 @@ function handlebusquedaButtonClick() {
       break;
 
     case "admin":
-
       handleAdminAction();
       return;
 
@@ -177,18 +168,71 @@ function handlebusquedaButtonClick() {
   }
 }
 
+function createNewItemForm() {
+  const newItemForm = document.createElement("div");
+  newItemForm.innerHTML = `
+    <h3>Add New Item</h3>
+    <label for="newItemId">ID:</label>
+    <input type="number" id="newItemId" min="1000">
+    <label for="newItemNombre">Nombre:</label>
+    <input type="text" id="newItemNombre">
+    <label for="newItemCategoria">Categoría:</label>
+    <input type="text" id="newItemCategoria">
+    <label for="newItemPrecio">Precio:</label>
+    <input type="number" id="newItemPrecio" min="0">
+    <label for="newItemExistencias">Existencias:</label>
+    <input type="number" id="newItemExistencias" min="0">
+    <button id="addItemButton">Add Item</button>
+  `;
+  inventoryElement.innerHTML = "";
+  inventoryElement.append(newItemForm);
+
+  const addItemButton = document.querySelector("#addItemButton");
+  addItemButton.addEventListener("click", handleAddItemButtonClick);
+}
+
+function handleAddItemButtonClick() {
+  const newItemId = Number(document.querySelector("#newItemId").value);
+  const newItemNombre = document.querySelector("#newItemNombre").value;
+  const newItemCategoria = document.querySelector("#newItemCategoria").value;
+  const newItemPrecio = Number(document.querySelector("#newItemPrecio").value);
+  const newItemExistencias = Number(document.querySelector("#newItemExistencias").value);
+
+  const isIdExist = item.some((item) => item.id === newItemId);
+  const isNameExist = item.some((item) => item.nombre === newItemNombre);
+
+  if (isIdExist) {
+    console.log("Error: ID existente en Array.");
+    return;
+  }
+
+  if (isNameExist) {
+    console.log("Error: Nombre existente en Array.");
+    return;
+  }
+
+  const newItem = new Item(newItemId, newItemNombre, newItemCategoria, newItemPrecio, newItemExistencias);
+
+  item.push(newItem);
+
+  updateLocalStorage(item);
+  displayArrayInfo();
+  displayItems(item);
+}
+
+
+
 function handleAdminAction() {
   const adminAction = document.querySelector("#adminAction").value;
 
   switch (adminAction) {
-
     case "stock":
-      const stockOrdenado = item.sort((a, b) => a.existencias - b.existencias);
+      const stockOrdenado = item.slice().sort((a, b) => a.existencias - b.existencias);
       displayItems(stockOrdenado);
       break;
 
     case "reposicion":
-      const repOrdenado = item.sort((a, b) => b.existencias - a.existencias);
+      const repOrdenado = item.slice().sort((a, b) => b.existencias - a.existencias);
       displayItems(repOrdenado);
       break;
 
@@ -197,8 +241,17 @@ function handleAdminAction() {
   }
 }
 
+
+
 function displayArrayInfo() {
-  const arrayContainer = document.querySelector("#arrayContainer");
+  const searchOpt = searchOptElement.value;
+  const arrayInfoElement = document.querySelector("#arrayContainer");
+
+  if (searchOpt === "") {
+    arrayInfoElement.innerHTML = "";
+    return;
+  }
+
   let formattedArrayInfo = "";
   item.forEach(function (item) {
     formattedArrayInfo += "ID: " + item.id + "<br>";
@@ -207,24 +260,23 @@ function displayArrayInfo() {
     formattedArrayInfo += "Precio: $" + item.precio + "<br>";
     formattedArrayInfo += "Existencias: " + item.existencias + "<br><br>";
   });
-  arrayContainer.innerHTML = formattedArrayInfo;
-}
 
-displayArrayInfo();
+  if (formattedArrayInfo === "") {
+    arrayInfoElement.innerHTML = "No hay resultados.";
+  } else {
+    arrayInfoElement.innerHTML = formattedArrayInfo;
+  }
+}
 
 function updateLocalStorage(items) {
-  localStorage.setItem("item", JSON.stringify(items));
+  localStorage.setItem("itemArray", JSON.stringify(items));
 }
 
-
-/////////////////// seteo del intervalo de actualización del array 
+// Seteo del intervalo de actualización del array
 setInterval(() => {
   displayArrayInfo();
-  console.log("eaea");
   updateLocalStorage(item);
 }, 5000);
-
-
 
 function displayItems(items) {
   inventoryElement.innerHTML = "";
@@ -283,6 +335,6 @@ function displayItems(items) {
   }
 }
 
-displayItems();
-
-// que ? 
+displayArrayInfo();
+displayItems(item);
+// wh00t 
