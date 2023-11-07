@@ -216,57 +216,71 @@ function updateLocalStorage(items) {
   localStorage.setItem("item", JSON.stringify(items));
 }
 
+
+/////////////////// seteo del intervalo de actualización del array 
+setInterval(() => {
+  displayArrayInfo();
+  console.log("eaea");
+  updateLocalStorage(item);
+}, 5000);
+
+
+
 function displayItems(items) {
   inventoryElement.innerHTML = "";
-  items.forEach((item) => {
-    const card = document.createElement("div");
-    card.classList.add("card");
+  if (Array.isArray(items)) {
+    items.forEach((item) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
 
-    const idElement = document.createElement("p");
-    idElement.textContent = `ID: ${item.id}`;
-    card.append(idElement);
+      const idElement = document.createElement("p");
+      idElement.textContent = `ID: ${item.id}`;
+      card.append(idElement);
 
-    const nombreElement = document.createElement("p");
-    nombreElement.textContent = `Nombre: ${item.nombre}`;
-    card.append(nombreElement);
+      const nombreElement = document.createElement("p");
+      nombreElement.textContent = `Nombre: ${item.nombre}`;
+      card.append(nombreElement);
 
-    const categoriaElement = document.createElement("p");
-    categoriaElement.textContent = `Categoría: ${item.categoria}`;
-    card.append(categoriaElement);
+      const categoriaElement = document.createElement("p");
+      categoriaElement.textContent = `Categoría: ${item.categoria}`;
+      card.append(categoriaElement);
 
-    const precioElement = document.createElement("p");
-    precioElement.textContent = `Precio: $${item.precio}`;
-    card.append(precioElement);
-    
-    const existenciasElement = document.createElement("p");
-    existenciasElement.textContent = `Existencias: ${item.existencias}`;
-    card.append(existenciasElement);
-    inventoryElement.append(card);
+      const precioElement = document.createElement("p");
+      precioElement.textContent = `Precio: $${item.precio}`;
+      card.append(precioElement);
 
-    const addButton = document.createElement("button");
-    addButton.classList.add("card-btn");
-    addButton.textContent = "Agregar";
-    addButton.addEventListener("click", () => {
-      item.existencias++;
-      updateLocalStorage(items);
-      displayArrayInfo();
-      displayItems(items);
-    });
-    card.append(addButton);
+      const existenciasElement = document.createElement("p");
+      existenciasElement.textContent = `Existencias: ${item.existencias}`;
+      card.append(existenciasElement);
+      inventoryElement.append(card);
 
-    const remButton = document.createElement("button");
-    remButton.classList.add("card-btn");
-    remButton.textContent = "Quitar";
-    remButton.addEventListener("click", () => {
-      if (item.existencias > 0) {
-        item.existencias--;
+      const addButton = document.createElement("button");
+      addButton.classList.add("card-btn");
+      addButton.textContent = "Agregar";
+      addButton.addEventListener("click", () => {
+        item.existencias++;
         updateLocalStorage(items);
         displayArrayInfo();
         displayItems(items);
-      }
+      });
+      card.append(addButton);
+
+      const remButton = document.createElement("button");
+      remButton.classList.add("card-btn");
+      remButton.textContent = "Quitar";
+      remButton.addEventListener("click", () => {
+        if (item.existencias > 0) {
+          item.existencias--;
+          updateLocalStorage(items);
+          displayArrayInfo();
+          displayItems(items);
+        }
+      });
+      card.append(remButton);
     });
-    card.append(remButton);
-  });
+  } else {
+    displayArrayInfo();
+  }
 }
 
 displayItems();
