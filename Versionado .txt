@@ -1,0 +1,30 @@
+Proyecto Final versionado:
+
+PF-Func100V1.0 : 
+
+- Corrección del array espejo que muestra existencias en tiempo real con botones de agregar y quitar.
+- Corrección de los botones de agregar y quitar.
+- Modificación de getElements por querySelector. 
+
+
+PF-Func100V1.1 :
+
+- Se aplican estilos a botones.
+- Se aplican estilos a elementos creados mediante Js.
+
+
+PF-Func100V1.2 :
+
+- Se agrega setInterval en modo asincrónico para update constante del array de muestra. 
+- Se agrega validación en ciclo for para verificar si hay un array definido o no y cómo proceder en cada caso. 
+
+
+
+Próxima versión:
+
+- Mejorar estética.
+- Pensar nueva funcionalidad, agregar un posible nuevo item. 
+
+Boton fijo o validación ?
+
+RECORDAR QUE TIENE QUE LLAMAR A LA FUNCTION PARA UPDATEAR EL ARRAY ! 
