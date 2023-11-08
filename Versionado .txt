@@ -24,12 +24,16 @@ PF-Func100V1.3 :
 - Se agrega "versionado" para bitácora de modificaciones y acceso a posibles backups.
 
 
+PF-Func100V1.4 :
 
-Próxima versión:
+- Se agrega botón de Agregar item en la opción "ID / Agregar producto".
+- Se modifica el tiempo del setInterval. 
+- Se hacen arreglos generales sobre el display en HTML.
 
-- Mejorar estética.
-- Pensar nueva funcionalidad, agregar un posible nuevo item. 
 
-Boton fijo o validación ?
+PF-Func100V1.5 : Final Ver.
 
-RECORDAR QUE TIENE QUE LLAMAR A LA FUNCTION PARA UPDATEAR EL ARRAY ! 
+- Se agrega FETCH de API dolares. 
+- Se modifican mensajes de error con SweetAlerts para ID y Nombre repetidos en agregar items.
+
+

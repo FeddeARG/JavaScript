@@ -1,18 +1,19 @@
 localStorage.clear();
 
+
 let item = [];
 
 class Item {
   constructor(id, nombre, categoria, precio, existencias) {
     this.id = id;
     this.nombre = nombre;
-      this.categoria = categoria;
-      this.precio = precio;
-      this.existencias = existencias;
-    }
+    this.categoria = categoria;
+    this.precio = precio;
+    this.existencias = existencias;
   }
+}
 
-  const separador = " / ";
+const separador = " / ";
 
 // Recupero el array del localStorage
 const storedItemArray = localStorage.getItem("itemArray");
@@ -48,7 +49,7 @@ busquedaButton.addEventListener("click", handlebusquedaButtonClick);
 
 function handlesearchOptChange() {
   const searchOpt = searchOptElement.value;
-  inputContainerElement.innerHTML = ""; 
+  inputContainerElement.innerHTML = "";
 
   switch (searchOpt) {
     case "id":
@@ -202,11 +203,23 @@ function handleAddItemButtonClick() {
   const isNameExist = item.some((item) => item.nombre === newItemNombre);
 
   if (isIdExist) {
+    Swal.fire({
+      title: 'Error!',
+      text: 'ID existente, ingrese un ID que no se encuentre repetido',
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
     console.log("Error: ID existente en Array.");
     return;
   }
 
   if (isNameExist) {
+    Swal.fire({
+      title: 'Error!',
+      text: 'Nombre existente, ingrese un Nombre que no se encuentre repetido',
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
     console.log("Error: Nombre existente en Array.");
     return;
   }
@@ -257,8 +270,8 @@ function displayArrayInfo() {
     formattedArrayInfo += "ID: " + item.id + "<br>";
     formattedArrayInfo += "Nombre: " + item.nombre + "<br>";
     formattedArrayInfo += "Categoría: " + item.categoria + "<br>";
-    formattedArrayInfo += "Precio: $" + item.precio + "<br>";
-    formattedArrayInfo += "Existencias: " + item.existencias + "<br><br>";
+    formattedArrayInfo += "Precio en USD: " + item.precio + "<br>";
+    formattedArrayInfo += "Existencias: " + item.existencias + " unidades"+"<br><br>";
   });
 
   if (formattedArrayInfo === "") {
@@ -337,4 +350,22 @@ function displayItems(items) {
 
 displayArrayInfo();
 displayItems(item);
+
+
+fetch("https://dolarapi.com/v1/dolares/oficial")
+  .then(response => response.json())
+  .then(data => {
+    const doli = document.createElement("div");
+    doli.classList.add("div-dol");
+
+    let content = "";
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        content += `${key}: ${data[key]}\n`;
+      }
+    }
+
+    doli.textContent = content;
+    document.body.appendChild(doli);
+  });
 // wh00t 
